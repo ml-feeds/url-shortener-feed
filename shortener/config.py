@@ -21,8 +21,9 @@ CACHE_SIZE = 128
 CACHE_TTL = datetime.timedelta(minutes=58).total_seconds()
 ON_SERVERLESS = bool(os.getenv('GCLOUD_PROJECT'))
 PACKAGE_NAME = Path(__file__).parent.stem
-USF_TOKENS = _env_key_to_list('USF_TOKENS')
 SAMPLE_FEED_URL = 'https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets'
+USER_AGENT = 'Mozilla/5.0'
+USF_TOKENS = _env_key_to_list('USF_TOKENS')
 
 LOGGING = {  # Ref: https://docs.python.org/3/howto/logging.html#configuring-logging
     'version': 1,
