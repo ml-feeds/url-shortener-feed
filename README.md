@@ -6,7 +6,7 @@ As a disclaimer, it has no affiliation with Bitly.
 ## Links
 * [Project repo](https://github.com/ml-feeds/url-shortener-feed)
 * [Sample unmodified feed](https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets)
-* [**Sample modified feed**](https://us-east1-ml-feeds.cloudfunctions.net/url-shortener-feed/token=SAMPLE&url=https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets)
+* [**Sample modified feed**](https://us-east1-ml-feeds.cloudfunctions.net/url-shortener-feed?token=sample&url=https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets)
 
 ## Service deployment
 Serverless deployment to [Google Cloud Functions](https://console.cloud.google.com/functions/) is configured.
@@ -16,7 +16,7 @@ It requires the following files:
 
 It requires the following environment variables:
 * USF_TOKENS: a comma-separated list of tokens for access to this service
-* BITLY_TOKENS: a comma-separated list of tokens for access to Bitly
+* BITLY_TOKENS: a comma-separated list of tokens for access to the Bitly service
 
 Deployment version updates are not automated.
 They can be performed manually by editing and saving the function configuration.
