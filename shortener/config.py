@@ -15,7 +15,7 @@ def _env_key_to_list(env_key: str) -> List[str]:
     return [s.strip() for s in os.getenv(env_key, '').strip().split(',') if s.strip()]
 
 
-BITLY_SHORTENER_CACHE_SIZE = 4096
+BITLY_SHORTENER_CACHE_SIZE = 2048
 BITLY_TOKENS = _env_key_to_list('BITLY_TOKENS')
 CACHE_SIZE = 128
 CACHE_TTL = datetime.timedelta(minutes=58).total_seconds()
