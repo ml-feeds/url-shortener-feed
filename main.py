@@ -32,7 +32,7 @@ def serve(request: flask.Request) -> Response:
              str(token)[:4], ip, hget('X-Appengine-City'), hget('X-Appengine-Region'), hget('X-Appengine-Country'), url)
 
     if not(any(compare_digest(token, approved_token) for approved_token in config.USF_TOKENS)) or \
-            (compare_digest(token, 'sample') and (url != config.SAMPLE_FEED_URL)):
+            ((token == 'sample') and (url != config.SAMPLE_FEED_URL)):
         msg = 'Invalid request. Specify valid values for query parameters "token" and "url". Use of this service is ' \
               'restricted to approved users.'
         return _response(msg, 400, ip)
