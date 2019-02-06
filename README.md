@@ -27,8 +27,9 @@ These deployment links require access:
 * [Repo](https://source.cloud.google.com/ml-feeds/github_ml-feeds_url-shortener-feed)
 
 ## Service usage
-Due to security considerations, use of the deployed service is restricted to approved users only.
-An approved user must provide the supplied secret `token` and a `url` as parameters for a `GET` request.
+Due to security considerations, with the exception of the sample feed, use of the deployed service is restricted to
+approved users only.
+An approved user must provide the supplied secret `token` and a `url` as query parameters for a `GET` request.
 The token must obviously not be committed to any public repository.
 
 The output for a given URL is cached for 58 minutes.
