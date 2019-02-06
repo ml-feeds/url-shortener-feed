@@ -12,7 +12,7 @@ def configure_logging() -> None:
 
 
 def _env_key_to_list(env_key: str) -> List[str]:
-    return [s.strip() for s in os.getenv(env_key, '').strip().split(',')]
+    return [s.strip() for s in os.getenv(env_key, '').strip().split(',') if s.strip()]
 
 
 BITLY_SHORTENER_CACHE_SIZE = 4096
