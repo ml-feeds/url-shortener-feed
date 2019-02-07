@@ -23,6 +23,7 @@ PACKAGE_NAME = Path(__file__).parent.stem
 SAMPLE_FEED_URL = 'https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets'
 TTL_CACHE_SIZE = 128
 TTL_CACHE_TTL = datetime.timedelta(minutes=58).total_seconds()
+URL_TIMEOUT = 45
 USER_AGENT = 'Mozilla/5.0'
 USF_TOKENS = _env_key_to_list('USF_TOKENS')
 
