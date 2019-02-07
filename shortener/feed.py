@@ -41,15 +41,14 @@ class Feed:
         except ElementTree.ParseError as exception:
             raise FeedError(f'Unable to parse URL content as XML: {exception}', 422)
 
-        long_urls = (elem.text for elem in xml.findall('./channel/item/link'))
+        link_xpath = './channel/item/link'
+        long_urls = (elem.text for elem in xml.iterfind(link_xpath))
         url_map = self._shorten_urls(long_urls)
         is_debug_logged = self._is_debug_logged
-        channel = next(xml.iter('channel'))
-
-        for item in list(channel.iter('item')):  # https://stackoverflow.com/a/19419905/
-            long_url = item.find('link').text  # type: ignore
+        for link in xml.iterfind(link_xpath):
+            long_url = link.text
             short_url = url_map[long_url]
-            item.find('link').text = short_url  # type: ignore
+            link.text = short_url
             if is_debug_logged:
                 log.debug('Replaced %s with %s.', long_url, short_url)
 
