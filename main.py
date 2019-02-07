@@ -38,7 +38,7 @@ def serve(request: flask.Request) -> Response:
     log.info('Received request using token starting with %s from %s from %s, %s, %s for URL %s.',
              str(token)[:4], ip, hget('X-Appengine-City'), hget('X-Appengine-Region'), hget('X-Appengine-Country'), url)
 
-    if all([token, url]) and (_is_sampling(token, url) or _is_authorized(token)):
+    if all([token, url]) and (_is_authorized(token) or _is_sampling(token, url)):
         try:
             output = feed.feed(url)
         except FeedError as exc:
