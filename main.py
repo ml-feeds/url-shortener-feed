@@ -14,6 +14,14 @@ Response = Tuple[Union[bytes, str], int, Dict[str, str]]
 mem = MemUse()
 
 
+def _is_authorized(token: str) -> bool:
+    return any(compare_digest(token, approved_token) for approved_token in config.USF_TOKENS)
+
+
+def _is_sampling(token: str, url: str) -> bool:
+    return (token == 'sample') and (url == config.SAMPLE_FEED_URL)
+
+
 def _response(msg: Union[bytes, str], code: int, ip: str) -> Response:
     mem.log_use()
     if code >= 400:
@@ -30,16 +38,13 @@ def serve(request: flask.Request) -> Response:
     log.info('Received request using token starting with %s from %s from %s, %s, %s for URL %s.',
              str(token)[:4], ip, hget('X-Appengine-City'), hget('X-Appengine-Region'), hget('X-Appengine-Country'), url)
 
-    if not(all([token, url])) or \
-            not(any(compare_digest(token, approved_token) for approved_token in config.USF_TOKENS)) or \
-            ((token == 'sample') and (url != config.SAMPLE_FEED_URL)):
+    if all([token, url]) and (_is_sampling(token, url) or _is_authorized(token)):
+        try:
+            output = feed.feed(url)
+        except FeedError as exc:
+            return _response(str(exc), exc.code, ip)
+        return _response(output, 200, ip)
+    else:
         msg = 'Invalid request. Specify valid values for query parameters "token" and "url". Use of this service is ' \
               'restricted to approved users.'
         return _response(msg, 401, ip)
-
-    try:
-        output = feed.feed(url)
-    except FeedError as exc:
-        return _response(str(exc), exc.code, ip)
-
-    return _response(output, 200, ip)
