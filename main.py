@@ -28,7 +28,8 @@ def _response(msg: Union[bytes, str], code: int, ip: str) -> Response:
         log.error('Error %s while handling request from %s: %s', code, ip, msg)
         return f'ERROR: {msg}', code, {'Content-Type': 'text/plain; charset=utf-8'}
     else:
-        return msg, code, {'Content-Type': 'text/xml; charset=utf-8'}
+        return msg, code, {'Content-Type': 'text/xml; charset=utf-8',
+                           config.SELF_DETECTION_HEADER_KEY: config.SELF_DETECTION_HEADER_VALUE}
 
 
 def serve(request: flask.Request) -> Response:

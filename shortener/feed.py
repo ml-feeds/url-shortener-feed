@@ -14,7 +14,8 @@ config.configure_logging()
 
 log = logging.getLogger(__name__)
 
-# TODO: Prohibit feed URL recursion.
+# TODO: Prohibit service cycles.
+# TODO: Increase Bitly tokens from 5 to 10.
 # TODO: Add support for Atom, e.g. https://feeds.feedburner.com/blogspot/gJZg
 # TODO: Use compressed caches so as to save memory.
 # TODO: Check for safety of URL.
@@ -62,10 +63,13 @@ class Feed:
         log.debug('Reading input feed having URL %s', url)
         request = Request(url, headers={'User-Agent': config.USER_AGENT})
         try:
-            text = urlopen(request, timeout=config.URL_TIMEOUT).read()
+            response = urlopen(request, timeout=config.URL_TIMEOUT)
+            text = response.read()
         except urllib.error.URLError as exception:
             raise FeedError(f'Unable to read URL: {exception}', 404)
         log.info('Input feed has size %s.', humanize_len(text))
+        if response.headers[config.SELF_DETECTION_HEADER_KEY] == config.SELF_DETECTION_HEADER_VALUE:
+            raise FeedError(f'Cycle detected.', 400)
         text = self._output(text)
         log.info('Output feed has size %s.', humanize_len(text))
         return text
