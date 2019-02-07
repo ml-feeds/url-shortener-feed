@@ -16,6 +16,8 @@ log = logging.getLogger(__name__)
 
 # TODO: Check for safety of URL.
 # Refer to: https://stackoverflow.com/questions/25033741/ and https://stackoverflow.com/questions/12083578/
+# TODO: Used defused XML parser.
+# TODO: Use compressed caches.
 
 
 class FeedError(Exception):
