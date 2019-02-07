@@ -30,7 +30,8 @@ def serve(request: flask.Request) -> Response:
     log.info('Received request using token starting with %s from %s from %s, %s, %s for URL %s.',
              str(token)[:4], ip, hget('X-Appengine-City'), hget('X-Appengine-Region'), hget('X-Appengine-Country'), url)
 
-    if not(any(compare_digest(token, approved_token) for approved_token in config.USF_TOKENS)) or \
+    if not(all([token, url])) or \
+            not(any(compare_digest(token, approved_token) for approved_token in config.USF_TOKENS)) or \
             ((token == 'sample') and (url != config.SAMPLE_FEED_URL)):
         msg = 'Invalid request. Specify valid values for query parameters "token" and "url". Use of this service is ' \
               'restricted to approved users.'
