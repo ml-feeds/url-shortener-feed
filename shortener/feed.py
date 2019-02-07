@@ -28,7 +28,7 @@ class FeedError(Exception):
 
 
 class Feed:
-    def __init__(self):
+    def __init__(self) -> None:
         self._shorten_urls = BitlyShortener(tokens=config.BITLY_TOKENS,
                                             max_cache_size=config.BITLY_SHORTENER_CACHE_SIZE).shorten_urls_to_dict
         self._is_debug_logged = log.isEnabledFor(logging.DEBUG)
