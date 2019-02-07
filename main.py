@@ -5,8 +5,7 @@ from typing import Dict, Tuple, Union
 import flask
 
 from shortener import config
-from shortener.exc import FeedError
-from shortener.feed import Feed
+from shortener.feed import Feed, FeedError
 from shortener.util.resource import MemUse
 
 log = logging.getLogger(__name__)
@@ -18,7 +17,7 @@ mem = MemUse()
 def _response(msg: Union[bytes, str], code: int, ip: str) -> Response:
     mem.log_use()
     if code >= 400:
-        log.error('Error handling request from %s: %s', ip, msg)
+        log.error('Error %s while handling request from %s: %s', code, ip, msg)
         return f'ERROR: {msg}', code, {'Content-Type': 'text/plain; charset=utf-8'}
     else:
         return msg, code, {'Content-Type': 'text/xml; charset=utf-8'}
@@ -35,7 +34,7 @@ def serve(request: flask.Request) -> Response:
             ((token == 'sample') and (url != config.SAMPLE_FEED_URL)):
         msg = 'Invalid request. Specify valid values for query parameters "token" and "url". Use of this service is ' \
               'restricted to approved users.'
-        return _response(msg, 400, ip)
+        return _response(msg, 401, ip)
 
     try:
         output = feed.feed(url)
