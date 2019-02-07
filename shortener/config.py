@@ -17,11 +17,12 @@ def _env_key_to_list(env_key: str) -> List[str]:
 
 BITLY_SHORTENER_CACHE_SIZE = 2048
 BITLY_TOKENS = _env_key_to_list('BITLY_TOKENS')
-CACHE_SIZE = 128
-CACHE_TTL = datetime.timedelta(minutes=58).total_seconds()
+LRU_CACHE_SIZE = 128
 ON_SERVERLESS = bool(os.getenv('GCLOUD_PROJECT'))
 PACKAGE_NAME = Path(__file__).parent.stem
 SAMPLE_FEED_URL = 'https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets'
+TTL_CACHE_SIZE = 128
+TTL_CACHE_TTL = datetime.timedelta(minutes=58).total_seconds()
 USER_AGENT = 'Mozilla/5.0'
 USF_TOKENS = _env_key_to_list('USF_TOKENS')
 
