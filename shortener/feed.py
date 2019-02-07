@@ -68,7 +68,7 @@ class Feed:
         except urllib.error.URLError as exception:
             raise FeedError(f'Unable to read URL: {exception}', 404)
         log.info('Input feed has size %s.', humanize_len(text))
-        if response.headers[config.SELF_DETECTION_HEADER_KEY] == config.SELF_DETECTION_HEADER_VALUE:
+        if response.headers[config.CYCLE_DETECTION_HEADER_KEY] == config.CYCLE_DETECTION_HEADER_VALUE:
             raise FeedError(f'Cycle detected.', 400)
         text = self._output(text)
         log.info('Output feed has size %s.', humanize_len(text))

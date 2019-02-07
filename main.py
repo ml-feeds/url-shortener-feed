@@ -29,7 +29,7 @@ def _response(msg: Union[bytes, str], code: int, ip: str) -> Response:
         return f'ERROR: {msg}', code, {'Content-Type': 'text/plain; charset=utf-8'}
     else:
         return msg, code, {'Content-Type': 'text/xml; charset=utf-8',
-                           config.SELF_DETECTION_HEADER_KEY: config.SELF_DETECTION_HEADER_VALUE}
+                           config.CYCLE_DETECTION_HEADER_KEY: config.CYCLE_DETECTION_HEADER_VALUE}
 
 
 def serve(request: flask.Request) -> Response:

@@ -18,11 +18,11 @@ def _env_key_to_list(env_key: str) -> List[str]:
 PACKAGE_NAME = Path(__file__).parent.stem
 BITLY_SHORTENER_CACHE_SIZE = 2048
 BITLY_TOKENS = _env_key_to_list('BITLY_TOKENS')
+CYCLE_DETECTION_HEADER_KEY = f'X-{PACKAGE_NAME.title()}'
+CYCLE_DETECTION_HEADER_VALUE = '1'
 LRU_CACHE_SIZE = 128
 ON_SERVERLESS = bool(os.getenv('GCLOUD_PROJECT'))
 SAMPLE_FEED_URL = 'https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets'
-SELF_DETECTION_HEADER_KEY = f'X-{PACKAGE_NAME.title()}'
-SELF_DETECTION_HEADER_VALUE = '1'
 TTL_CACHE_SIZE = 128
 TTL_CACHE_TTL = datetime.timedelta(minutes=58).total_seconds()
 URL_TIMEOUT = 45
