@@ -45,9 +45,9 @@ class Feed:
         channel = next(xml.iter('channel'))
 
         for item in list(channel.iter('item')):  # https://stackoverflow.com/a/19419905/
-            long_url = item.find('link').text
+            long_url = item.find('link').text  # type: ignore
             short_url = url_map[long_url]
-            item.find('link').text = short_url
+            item.find('link').text = short_url  # type: ignore
             if is_debug_logged:
                 log.debug('Replaced %s with %s.', long_url, short_url)
 
