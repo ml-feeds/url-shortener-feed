@@ -15,7 +15,6 @@ config.configure_logging()
 log = logging.getLogger(__name__)
 
 # TODO: Prohibit service cycles.
-# TODO: Increase Bitly tokens from 5 to 10.
 # TODO: Add support for Atom, e.g. https://feeds.feedburner.com/blogspot/gJZg
 # TODO: Use compressed caches so as to save memory.
 # TODO: Check for safety of URL.
