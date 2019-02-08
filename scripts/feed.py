@@ -5,7 +5,8 @@ from shortener.feed import Feed
 
 log = logging.getLogger(__name__)
 
-URL = 'https://us-east1-ml-feeds.cloudfunctions.net/nvidia-research-ml'
+URL = 'https://feeds.feedburner.com/blogspot/gJZg'
+# URL = 'https://us-east1-ml-feeds.cloudfunctions.net/nvidia-research-ml'
 
 if __name__ == '__main__':
     feed = Feed()

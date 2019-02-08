@@ -8,6 +8,7 @@ from bitlyshortener import Shortener as BitlyShortener
 from cachetools.func import ttl_cache
 
 from . import config
+from .link import LINK_TYPES
 from .util.humanize import humanize_len
 
 config.configure_logging()
@@ -35,26 +36,31 @@ class Feed:
         self._is_debug_logged = log.isEnabledFor(logging.DEBUG)
 
     @lru_cache(maxsize=config.LRU_CACHE_SIZE)
-    def _output(self, text: str) -> bytes:
+    def _output(self, text: bytes) -> bytes:
         try:
             xml = ElementTree.fromstring(text)
         except ElementTree.ParseError as exception:
             raise FeedError(f'Unable to parse URL content as XML: {exception}', 422)
 
-        link_xpath = './channel/item/link'
-        long_urls = (elem.text for elem in xml.iterfind(link_xpath))
-        url_map = self._shorten_urls(long_urls)
         is_debug_logged = self._is_debug_logged
-        for link in xml.iterfind(link_xpath):
-            long_url = link.text
-            short_url = url_map[long_url]
-            link.text = short_url
-            if is_debug_logged:
-                log.debug('Replaced %s with %s.', long_url, short_url)
-
-        log.info('Output feed has %s items.', len(xml.findall('./channel/item')))
-        text_: bytes = ElementTree.tostring(xml)
-        return text_
+        for link_type in LINK_TYPES:
+            link_elements = link_type.findall(xml)
+            if not link_elements:
+                continue
+            long_urls = [element.link for element in link_elements]
+            url_map = self._shorten_urls(long_urls)
+            for element in link_elements:
+                long_url = element.link
+                short_url = url_map[long_url]
+                element.link = short_url
+                if is_debug_logged:
+                    log.debug('Replaced %s with %s.', long_url, short_url)
+            log.info('Output feed has %s items.', len(link_elements))
+            text_: bytes = ElementTree.tostring(xml)
+            return text_
+        else:
+            log.warning('No link elements were found in XML.')
+            return text
 
     @ttl_cache(maxsize=config.TTL_CACHE_SIZE, ttl=config.TTL_CACHE_TTL)
     def feed(self, url: str) -> bytes:
