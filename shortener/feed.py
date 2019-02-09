@@ -69,11 +69,6 @@ class Feed:
         info.update(self._shortener.cache_info)
         return info
 
-    def log_cache_info(self):
-        info = self.cache_info.items()
-        info = '; '.join(f'{k}: h={v.hits},m={v.misses},ms={v.maxsize},cs={v.currsize}' for (k, v) in info)
-        log.info('Cache info: %s', info)
-
     @ttl_cache(maxsize=config.TTL_CACHE_SIZE, ttl=config.TTL_CACHE_TTL)
     def feed(self, url: str) -> bytes:
         log.debug('Reading input feed having URL %s', url)
@@ -89,3 +84,8 @@ class Feed:
         text = self._output(text)
         log.info('Output feed has size %s.', humanize_len(text))
         return text
+
+    def log_cache_info(self):
+        info = self.cache_info.items()
+        info = '; '.join(f'{k}: h={v.hits},m={v.misses},ms={v.maxsize},cs={v.currsize}' for (k, v) in info)
+        log.info('Cache info: %s', info)
