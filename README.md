@@ -8,7 +8,7 @@ Support for Atom is nascent.
 ## Links
 * [Project repo](https://github.com/ml-feeds/url-shortener-feed)
 * Sample unmodified feeds: [RSS](https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets), [Atom](https://feeds.feedburner.com/blogspot/gJZg)
-* Sample modified feeds: [RSS](https://us-east1-ml-feeds.cloudfunctions.net/url-shortener?token=sample&url=https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets), [Atom](https://us-east1-ml-feeds.cloudfunctions.net/url-shortener?token=sample&url=https://feeds.feedburner.com/blogspot/gJZg)
+* **Sample modified feeds: [RSS](https://us-east1-ml-feeds.cloudfunctions.net/url-shortener?token=sample&url=https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets), [Atom](https://us-east1-ml-feeds.cloudfunctions.net/url-shortener?token=sample&url=https://feeds.feedburner.com/blogspot/gJZg)**
 
 ## Service deployment
 Serverless deployment to [Google Cloud Functions](https://console.cloud.google.com/functions/) is configured.
