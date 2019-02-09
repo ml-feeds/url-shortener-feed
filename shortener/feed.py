@@ -17,7 +17,6 @@ log = logging.getLogger(__name__)
 
 # TODO: Add support for: https://export.arxiv.org/rss/eess.IV/recent
 # TODO: Add support for: http://feeds.feedburner.com/PTCC
-# TODO: Add and support sample Atom feed to readme.
 
 # TODO: Use compressed caches so as to save memory.
 
