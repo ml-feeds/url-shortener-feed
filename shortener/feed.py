@@ -1,5 +1,6 @@
-from functools import lru_cache
+from functools import _CacheInfo, lru_cache
 import logging
+from typing import Dict
 import urllib.error
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
@@ -30,8 +31,7 @@ class FeedError(Exception):
 
 class Feed:
     def __init__(self) -> None:
-        self._shorten_urls = BitlyShortener(tokens=config.BITLY_TOKENS,
-                                            max_cache_size=config.BITLY_SHORTENER_CACHE_SIZE).shorten_urls_to_dict
+        self._shortener = BitlyShortener(tokens=config.BITLY_TOKENS, max_cache_size=config.BITLY_SHORTENER_CACHE_SIZE)
         self._is_debug_logged = log.isEnabledFor(logging.DEBUG)
 
     @lru_cache(maxsize=config.LRU_CACHE_SIZE)
@@ -49,7 +49,7 @@ class Feed:
                 continue
             log.debug('Found %s %s link elements in XML.', len(link_elements), link_type.NAME)
             long_urls = [element.link for element in link_elements]
-            url_map = self._shorten_urls(long_urls)
+            url_map = self._shortener.shorten_urls_to_dict(long_urls)
             for element in link_elements:
                 long_url = element.link
                 short_url = url_map[long_url]
@@ -62,6 +62,17 @@ class Feed:
         else:
             log.warning('No link elements were found in XML.')
             return text
+
+    @property
+    def cache_info(self) -> Dict[str, _CacheInfo]:
+        info = {source.__qualname__: source.cache_info() for source in (self.feed, self._output)}
+        info.update(self._shortener.cache_info)
+        return info
+
+    def log_cache_info(self):
+        info = self.cache_info.items()
+        info = '; '.join(f'{k}: h={v.hits},m={v.misses},ms={v.maxsize},cs={v.currsize}' for (k, v) in info)
+        log.info('Cache info: %s', info)
 
     @ttl_cache(maxsize=config.TTL_CACHE_SIZE, ttl=config.TTL_CACHE_TTL)
     def feed(self, url: str) -> bytes:

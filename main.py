@@ -24,6 +24,7 @@ def _is_sampling(token: str, url: str) -> bool:
 
 
 def _response(msg: Union[bytes, str], code: int, ip: str) -> Response:
+    feed.log_cache_info()
     mem.log_use()
     if code >= 400:
         log.error('Error %s while handling request from %s: %s', code, ip, msg)
