@@ -15,8 +15,12 @@ config.configure_logging()
 
 log = logging.getLogger(__name__)
 
-# TODO: Add support for Atom, e.g. https://feeds.feedburner.com/blogspot/gJZg
+# TODO: Add support for: https://export.arxiv.org/rss/eess.IV/recent
+# TODO: Add support for: http://feeds.feedburner.com/PTCC
+# TODO: Add and support sample Atom feed to readme.
+
 # TODO: Use compressed caches so as to save memory.
+
 # TODO: Check for safety of URL.
 # Refer to: https://stackoverflow.com/questions/25033741/ and https://stackoverflow.com/questions/12083578/
 
