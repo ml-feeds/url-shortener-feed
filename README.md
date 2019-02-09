@@ -3,8 +3,6 @@
 feed are replaced with `j.mp` short links provided by Bitly.
 As a disclaimer, it has no affiliation with Bitly.
 
-Support for Atom is nascent.
-
 ## Links
 * [Project repo](https://github.com/ml-feeds/url-shortener-feed)
 * Sample unmodified feeds: [RSS](https://us-east1-ml-feeds.cloudfunctions.net/kdnuggets), [Atom](https://feeds.feedburner.com/blogspot/gJZg)
