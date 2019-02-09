@@ -19,7 +19,7 @@ def _is_authorized(token: str) -> bool:
 
 
 def _is_sampling(token: str, url: str) -> bool:
-    return (token == 'sample') and (url == config.SAMPLE_FEED_URL)
+    return (token == 'sample') and (url in (config.SAMPLE_RSS_FEED_URL, config.SAMPLE_ATOM_FEED_URL))
 
 
 def _response(msg: Union[bytes, str], code: int, ip: str) -> Response:
