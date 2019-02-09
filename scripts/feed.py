@@ -6,11 +6,11 @@ from shortener.feed import Feed
 log = logging.getLogger(__name__)
 
 ATOM_URL = 'https://feeds.feedburner.com/blogspot/gJZg'
-RSS_URL = 'https://us-east1-ml-feeds.cloudfunctions.net/nvidia-research-ml'
+RSS_URL = 'http://www.infoworld.com/category/artificial-intelligence/index.rss'
 
 if __name__ == '__main__':
     feed = Feed()
-    url = ATOM_URL
+    url = RSS_URL
     try:
         output = feed.feed(url)
         print(output.decode())

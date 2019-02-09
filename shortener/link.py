@@ -26,14 +26,22 @@ class _BaseLink(metaclass=abc.ABCMeta):
         pass
 
     @property
+    @classmethod
     @abc.abstractmethod
-    def XPATH(self) -> str:
+    def DESCRIPTION(cls) -> str:
+        pass
+
+    @property
+    @classmethod
+    @abc.abstractmethod
+    def XPATH(cls) -> str:
         pass
 
 
 class _LinkTypes(Enum):
 
-    class RSSLink(_BaseLink):
+    class RSSLink(_BaseLink):  # Example: http://www.infoworld.com/category/artificial-intelligence/index.rss
+        DESCRIPTION = 'RSS'
         XPATH = './channel/item/link'
 
         @property
@@ -44,7 +52,8 @@ class _LinkTypes(Enum):
         def link(self, link: str) -> None:
             self._element.text = link
 
-    class AtomLink(_BaseLink):
+    class AtomLink(_BaseLink):  # Example: https://feeds.feedburner.com/blogspot/gJZg
+        DESCRIPTION = 'Atom'
         NAMESPACES = {'atom': 'http://www.w3.org/2005/Atom'}
         XPATH = "./atom:entry/atom:link[@rel='alternate'][@href][@title]"
 

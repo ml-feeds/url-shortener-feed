@@ -1,7 +1,9 @@
 # url-shortener-feed
-**url-shortener-feed** uses Python 3.7 to serve a modified RSS feed such that all item links in the original feed are
-replaced with `j.mp` short links provided by Bitly.
+**url-shortener-feed** uses Python 3.7 to serve a modified RSS or Atom feed such that all item links in the original
+feed are replaced with `j.mp` short links provided by Bitly.
 As a disclaimer, it has no affiliation with Bitly.
+
+Support for Atom is nascent.
 
 ## Links
 * [Project repo](https://github.com/ml-feeds/url-shortener-feed)

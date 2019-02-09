@@ -47,7 +47,7 @@ class Feed:
             link_elements = link_type.findall(xml)
             if not link_elements:
                 continue
-            log.debug('Found %s %s elements in XML.', len(link_elements), link_type.__name__)
+            log.debug('Found %s link elements in XML parsed as %s.', len(link_elements), link_type.DESCRIPTION)
             long_urls = [element.link for element in link_elements]
             url_map = self._shorten_urls(long_urls)
             for element in link_elements:
