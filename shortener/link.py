@@ -50,16 +50,23 @@ class _BaseRSSLink(_BaseLink):
 
 class _LinkTypes(Enum):
 
-    class RSS2Link(_BaseRSSLink):  # Example: http://www.infoworld.com/category/artificial-intelligence/index.rss
+    class RSS2Link(_BaseRSSLink):
+        # Examples:
+        # http://www.infoworld.com/category/artificial-intelligence/index.rss
+        # https://feeds.feedburner.com/Pyimagesearch
         NAME = 'RSS2'
         XPATH = './channel/item/link'
 
-    class RSS1Link(_BaseRSSLink):  # Example: https://export.arxiv.org/rss/eess.IV/recent
+    class RSS1Link(_BaseRSSLink):
+        # Examples:
+        # https://export.arxiv.org/rss/eess.IV/recent
         NAME = 'RSS1'
         NAMESPACES = {'rss': 'http://purl.org/rss/1.0/'}
         XPATH = './rss:item/rss:link'
 
-    class AtomLink(_BaseLink):  # Example: https://feeds.feedburner.com/blogspot/gJZg
+    class AtomLink(_BaseLink):
+        # Examples:
+        # https://feeds.feedburner.com/blogspot/gJZg
         NAME = 'Atom'
         NAMESPACES = {'atom': 'http://www.w3.org/2005/Atom'}
         XPATH = "./atom:entry/atom:link[@rel='alternate'][@href]"
