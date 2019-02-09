@@ -14,7 +14,7 @@ Support for Atom is nascent.
 Serverless deployment to [Google Cloud Functions](https://console.cloud.google.com/functions/) is configured.
 It requires the following files:
 * requirements.txt
-* main.py (having callable `serve(request: flask.Request) -> Tuple[bytes, int, Dict[str, str]]`)
+* main.py (having callable `serve(request: flask.Request) -> Tuple[Union[bytes, str], int, Dict[str, str]]`)
 
 It requires the following environment variables:
 * USF_TOKENS: a comma-separated list of tokens for access to this service
