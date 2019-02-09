@@ -15,10 +15,7 @@ config.configure_logging()
 
 log = logging.getLogger(__name__)
 
-# TODO: Add support for: http://feeds.feedburner.com/PTCC
-
 # TODO: Use compressed caches so as to save memory.
-
 # TODO: Check for safety of URL.
 # Refer to: https://stackoverflow.com/questions/25033741/ and https://stackoverflow.com/questions/12083578/
 
