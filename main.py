@@ -15,6 +15,7 @@ mem = MemUse()
 
 
 def _is_authorized(token: str) -> bool:
+    token = token.lower()
     return any(compare_digest(token, approved_token) for approved_token in config.USF_TOKENS)
 
 
