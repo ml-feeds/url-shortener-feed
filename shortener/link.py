@@ -62,7 +62,7 @@ class _LinkTypes(Enum):
     class AtomLink(_BaseLink):  # Example: https://feeds.feedburner.com/blogspot/gJZg
         NAME = 'Atom'
         NAMESPACES = {'atom': 'http://www.w3.org/2005/Atom'}
-        XPATH = "./atom:entry/atom:link[@rel='alternate'][@href][@title]"
+        XPATH = "./atom:entry/atom:link[@rel='alternate'][@href]"
 
         @property
         def link(self) -> str:
