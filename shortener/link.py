@@ -28,7 +28,7 @@ class _BaseLink(metaclass=abc.ABCMeta):
     @property
     @classmethod
     @abc.abstractmethod
-    def DESCRIPTION(cls) -> str:
+    def NAME(cls) -> str:
         pass
 
     @property
@@ -38,22 +38,29 @@ class _BaseLink(metaclass=abc.ABCMeta):
         pass
 
 
+class _BaseRSSLink(_BaseLink):
+    @property
+    def link(self) -> str:
+        return self._element.text  # type: ignore
+
+    @link.setter
+    def link(self, link: str) -> None:
+        self._element.text = link
+
+
 class _LinkTypes(Enum):
 
-    class RSSLink(_BaseLink):  # Example: http://www.infoworld.com/category/artificial-intelligence/index.rss
-        DESCRIPTION = 'RSS'
+    class RSS2Link(_BaseRSSLink):  # Example: http://www.infoworld.com/category/artificial-intelligence/index.rss
+        NAME = 'RSS2'
         XPATH = './channel/item/link'
 
-        @property
-        def link(self) -> str:
-            return self._element.text  # type: ignore
-
-        @link.setter
-        def link(self, link: str) -> None:
-            self._element.text = link
+    class RSS1Link(_BaseRSSLink):  # Example: https://export.arxiv.org/rss/eess.IV/recent
+        NAME = 'RSS1'
+        NAMESPACES = {'rss': 'http://purl.org/rss/1.0/'}
+        XPATH = './rss:item/rss:link'
 
     class AtomLink(_BaseLink):  # Example: https://feeds.feedburner.com/blogspot/gJZg
-        DESCRIPTION = 'Atom'
+        NAME = 'Atom'
         NAMESPACES = {'atom': 'http://www.w3.org/2005/Atom'}
         XPATH = "./atom:entry/atom:link[@rel='alternate'][@href][@title]"
 
